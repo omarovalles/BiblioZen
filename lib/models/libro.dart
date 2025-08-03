@@ -1,5 +1,3 @@
-/* Juan
-*/
 class Libro {
   int? id;
   String titulo;
@@ -16,6 +14,14 @@ class Libro {
     required this.estado,
     required this.fechaRegistro,
   });
+
+  // Getter para usar estado como booleano
+  bool get leido => estado == 'Leído';
+
+  // Setter para modificar estado usando booleano
+  set leido(bool valor) {
+    estado = valor ? 'Leído' : 'Pendiente';
+  }
 
   Map<String, dynamic> toMap() {
     return {

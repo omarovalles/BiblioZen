@@ -3,7 +3,7 @@ Crear formulario para añadir/editar libros
 */
 import 'package:app_biblioteca_personal/controllers/libro_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:app_biblioteca_personal/models/fakemodel.dart';
+import '../models/libro.dart';
 
 class LibroFormView extends StatefulWidget {
   final Libro? libro;
@@ -43,7 +43,7 @@ class _LibroFormViewState extends State<LibroFormView> {
   Future<void> _guardarLibro() async {
     if (_formKey.currentState!.validate()) {
       final libro = Libro(
-        id: widget.libro?.id ?? 0, 
+        id: widget.libro?.id ?? 0,
         titulo: _tituloController.text,
         autor: _autorController.text,
         genero: _generoSelecionado,
@@ -87,9 +87,10 @@ class _LibroFormViewState extends State<LibroFormView> {
               DropdownButtonFormField<String>(
                 value: _generoSelecionado,
                 decoration: const InputDecoration(labelText: 'Género'),
-                items: ['Drama', 'Ciencia Ficción', 'Fantasía', 'Terror', 'Otro']
-                    .map((g) => DropdownMenuItem(value: g, child: Text(g)))
-                    .toList(),
+                items:
+                    ['Drama', 'Ciencia Ficción', 'Fantasía', 'Terror', 'Otro']
+                        .map((g) => DropdownMenuItem(value: g, child: Text(g)))
+                        .toList(),
                 onChanged: (value) {
                   setState(() {
                     _generoSelecionado = value!;
@@ -108,7 +109,9 @@ class _LibroFormViewState extends State<LibroFormView> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _guardarLibro,
-                child: Text(widget.libro == null ? 'Agregar' : 'Guardar cambios'),
+                child: Text(
+                  widget.libro == null ? 'Agregar' : 'Guardar cambios',
+                ),
               ),
             ],
           ),
