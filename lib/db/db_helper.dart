@@ -1,7 +1,7 @@
 /* Juan
 */
 
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/libro.dart';
 
@@ -38,7 +38,7 @@ class DatabaseHelper {
         titulo TEXT NOT NULL,
         autor TEXT NOT NULL,
         genero TEXT NOT NULL,
-        estado TEXT NOT NULL,
+        estado INTEGER NOT NULL,
         fechaRegistro TEXT NOT NULL
       )
     ''');
@@ -47,10 +47,18 @@ class DatabaseHelper {
     await db.insert('generos', {'nombre': 'No Ficción'});
   }
 
-  Future<int> insertLibro(Libro libro) async {
-    final db = await instance.database;
-    return await db.insert('libros', libro.toMap());
-  }
+Future<int> insertLibro(Libro libro) async {
+  final db = await instance.database;
+
+  final libroMap = libro.toMap();
+  libroMap.remove('id'); // importante
+
+  final id = await db.insert('libros', libroMap);
+  libro.id = id;
+  return id;
+}
+
+
 
   Future<List<Libro>> getAllLibros() async {
     final db = await instance.database;
