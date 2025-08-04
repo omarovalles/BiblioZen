@@ -1,16 +1,12 @@
-/* Omar
-*/
-
-import '../db/db_helperfake.dart';
-import '../models/fakemodel.dart';
-
+import '../models/libro.dart';
+import '../db/db_helper.dart';
 
 class LibroController {
-  final DBHelperFake dbHelper = DBHelperFake();
+  final DatabaseHelper dbHelper = DatabaseHelper.instance;
 
   // Obtener todos los libros
   Future<List<Libro>> obtenerLibros() async {
-    return await dbHelper.getLibros();
+    return await dbHelper.getAllLibros();
   }
 
   // Insertar un nuevo libro
@@ -27,5 +23,9 @@ class LibroController {
   Future<void> eliminarLibro(int id) async {
     await dbHelper.deleteLibro(id);
   }
-}
 
+  // Buscar libros por título
+  Future<List<Libro>> buscarLibros(String query) async {
+    return await dbHelper.searchLibros(query);
+  }
+}

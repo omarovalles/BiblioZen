@@ -4,7 +4,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/libro.dart';
-import '../models/genero.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -22,11 +21,7 @@ class DatabaseHelper {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDB,
-    );
+    return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -75,11 +70,7 @@ class DatabaseHelper {
 
   Future<int> deleteLibro(int id) async {
     final db = await instance.database;
-    return await db.delete(
-      'libros',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    return await db.delete('libros', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<List<Libro>> searchLibros(String query) async {
