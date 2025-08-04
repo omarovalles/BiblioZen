@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-/* Cristopher
-*/
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'views/libro_form_view.dart';
+import 'models/libro.dart';
+
 void main() {
-  runApp(const MainApp());
+  // Inicializa sqflite_common_ffi para PC
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -10,12 +16,18 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      title: 'Biblioteca Personal',
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LibroFormView(),
+        '/nuevo': (context) => const LibroFormView(),
+        '/editar': (context) {
+          final libro = ModalRoute.of(context)!.settings.arguments as Libro?;
+          return LibroFormView(libro: libro);
+        },
+      },
     );
   }
 }
