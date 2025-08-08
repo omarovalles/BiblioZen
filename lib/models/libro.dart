@@ -19,11 +19,11 @@ class Libro {
   });
 
   Map<String, dynamic> toMap() {
-final map = <String, dynamic>{
+    final map = <String, dynamic>{
       'titulo': titulo,
       'autor': autor,
       'genero': genero,
-      'estado': estado,
+      'estado': estado ? 1 : 0,
       'fechaRegistro': fechaRegistro.toIso8601String(),
     };
     if (id != null) {

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'views/libro_form_view.dart';
 import 'models/libro.dart';
+import 'views/libro_list_view.dart';
+import 'views/libro_form_view.dart';
 
 void main() {
-  // Inicializa sqflite_common_ffi para PC
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
+  WidgetsFlutterBinding.ensureInitialized();
+  // Si usas sqflite_common_ffi para Windows, inicialízalo aquí también
+  // sqfliteFfiInit();
+  // databaseFactory = databaseFactoryFfi;
 
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -21,11 +22,11 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const LibroFormView(),
-        '/nuevo': (context) => const LibroFormView(),
-        '/editar': (context) {
+        '/': (context) => const LibroListView(), // Pantalla principal lista
+        '/nuevoLibro': (context) => const LibroFormView(), // Para agregar libro
+        '/editarLibro': (context) {
           final libro = ModalRoute.of(context)!.settings.arguments as Libro?;
-          return LibroFormView(libro: libro);
+          return LibroFormView(libro: libro); // Para editar libro
         },
       },
     );

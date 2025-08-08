@@ -4,8 +4,10 @@ import '../views/libro_detail_view.dart';
 
 class LibroCard extends StatelessWidget {
   final Libro libro;
+  final VoidCallback? onRefresh;
 
-  const LibroCard({Key? key, required this.libro}) : super(key: key);
+  const LibroCard({Key? key, required this.libro, this.onRefresh})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,11 @@ class LibroCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => LibroDetailView(libro: libro),
             ),
-          );
+          ).then((_) {
+            if (onRefresh != null) {
+              onRefresh!();
+            }
+          });
         },
       ),
     );
